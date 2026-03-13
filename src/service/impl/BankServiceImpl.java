@@ -37,10 +37,6 @@ public class BankServiceImpl implements BankService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void deposit() {
-
-    }
 
     @Override
     public void deposit(String accountNumber, Double amount, String note) {
@@ -51,6 +47,24 @@ public class BankServiceImpl implements BankService {
         Transaction transaction=new Transaction(UUID.randomUUID().toString(), Type.DEPOSIT,account.getAccountNumber(),amount, LocalDateTime.now(),note);
         transactionRepository.add(transaction);
     }
+
+    @Override
+    public void withdraw(String accountNumber, Double amount, String note) {
+        Account account= accountRepository.findByNumber(accountNumber)
+                .orElseThrow(() -> new RuntimeException("Account not found: " + accountNumber));
+        if(account.getBalance().compareTo(amount)<0)
+        throw new RuntimeException("Insufficient Balance");
+        account.setBalance(account.getBalance()-amount);
+        Transaction transaction=new Transaction(UUID.randomUUID().toString(), Type.WITHDRAW,account.getAccountNumber(),amount, LocalDateTime.now(),note);
+        transactionRepository.add(transaction);
+
+    }
+
+    @Override
+    public void transfer(String from, String to, Double amount, String withdrawal) {
+
+    }
+
 
     //Refactored:
     private String getString() {
