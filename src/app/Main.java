@@ -32,7 +32,7 @@ public class Main {
                 case "2"-> deposit(sc,bankService);
                 case "3"-> withdraw(sc,bankService);
                 case "4"-> transfer(sc,bankService);
-                case "5"-> statement(sc);
+                case "5"-> statement(sc,bankService);
                 case "6"-> listAccounts(sc, bankService);
                 case "7"-> searchAccounts(sc);
                 case "0" ->running=false;
@@ -87,7 +87,10 @@ public class Main {
         bankService.transfer(from,to,amount,"Withdrawal");
     }
 
-    private static void statement(Scanner sc) {
+    private static void statement(Scanner sc, BankService bankService) {
+        System.out.println("Account number: ");
+        String accountNumber=sc.nextLine().trim();
+
     }
 
     private static void listAccounts(Scanner sc, BankService bankService) {
